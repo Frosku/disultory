@@ -20,19 +20,37 @@ but there are limitless ways in which it could be applied.
          [disultory.spec :as ds]
          [disultory.decision :as dd])
          
-(def spec (-> (blank-specification)
-             (with-attribute :name :fixed "Tom")   ; Set name to Tom
-             (with-attribute :gender :fixed :male) ; Set gender to male
-             (with-attribute 
-               :age 
-               :random
-               {:number 5 :sides 6 :function +})   ; Roll 5d6 for age
-             (with-attribute :bald :boolean 0.7))) ; 70% chance of baldness
-  => {:attributes [{:id :name, :type :fixed, :value "Tom"} {:id :gender, :type :fixed, :value :male} {:id :age, :type :random, :dice [{:number 5, :sides 6, :function #function[clojure.core/+]}]} {:id :bald, :type :boolean, :prob 0.7}]}
+(def spec (-> (d/blank-specification)
+             (d/with-attribute :name :fixed "Tom")    ; Set name to Tom
+             (d/with-attribute :gender :fixed :male)  ; Set gender to male
+             (d/with-attribute :age :random 
+                               (ds/dice + 5 6))         ; Roll 5d6 for age
+             (d/with-attribute :bald :boolean 0.7)))  ; 70% chance of baldness
+  => {:attributes 
+       [{:id :name, :type :fixed, :value "Tom"}
+        {:id :gender, :type :fixed, :value :male}
+        {:id :age, :type :random, :dice 
+          [{:number 5, :sides 6, :function #function[clojure.core/+]}]} 
+        {:id :bald, :type :boolean, :prob 0.7}]}
   
-(generate spec)
-=> {:name "Tom", :gender :male, :age 15, :bald true}
+(d/generate spec)
+  => {:name "Tom", :gender :male, :age 15, :bald true}
 ```
+
+If you think that it might not make sense for Tom to be bald at 15,
+or, at the very least you think it might be unfortunate for Tom, then
+you'll need a conditional attribute:
+
+```clojure
+(-> (d/blank-specification)
+   ...
+   (ds/with-conditional (fn [tom] (> (:age tom) 20)) 
+                        {:bald :boolean 0.2}))
+```
+
+Conditional attributes run after standard attributes, and therefore
+we can check the outcome of our age attribute, and only give Tom a
+chance of going bald if he's over 20 -- aren't we generous?
 
 ### Explanation
 

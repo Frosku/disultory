@@ -6,8 +6,7 @@
   :url "https://github.com:Frosku/disultory.git"
   :license {:name "The Unlicense"
             :url "https://unlicense.org"}
-  :dependencies [[org.clojure/clojure "1.10.1"]
-                 [org.fversnel/dnddice "3.0.3"]]
+  :dependencies [[org.clojure/clojure "1.10.1"]]
   :repl-options {:init-ns disultory.core}
   :source-paths ["src"]
   :test-paths ["t"]

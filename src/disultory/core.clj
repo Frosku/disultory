@@ -26,16 +26,17 @@
 (defn decide-attribute
   "Dispatch function for making decisions from attributes on a spec. See
    documentation in disultory.decision for more information."
-  [attr]
-  (case (:type attr)
-    :random (d/decide-random-attribute attr)
-    :dice (d/decide-dice-attribute attr)
-    :boolean (d/decide-boolean-attribute attr)
-    :distinct (d/decide-distinct-attribute attr)
-    :multiple-choice (d/decide-multiple-choice-attribute attr)
-    :n-choice (d/decide-n-choice-attribute attr)
-    :fixed (d/decide-fixed-attribute attr)
-    :fn (d/decide-fn-attribute attr)))
+  ([attr] (decide-attribute attr {}))
+  ([attr specification]
+   (case (:type attr)
+     :random (d/decide-random-attribute attr)
+     :dice (d/decide-dice-attribute attr)
+     :boolean (d/decide-boolean-attribute attr)
+     :distinct (d/decide-distinct-attribute attr)
+     :multiple-choice (d/decide-multiple-choice-attribute attr)
+     :n-choice (d/decide-n-choice-attribute attr)
+     :fixed (d/decide-fixed-attribute attr)
+     :fn (d/decide-fn-attribute attr specification))))
 
 (defn conditions-met
   "Returns a vector of conditional attributes whose conditions have been
@@ -60,7 +61,7 @@
     (let [next-specification (apply merge-with
                                     into
                                     specification
-                                    (map #(decide-attribute %)
+                                    (map #(decide-attribute % specification)
                                          (:attributes specification)))
           conditions-met (conditions-met next-specification)
           new-conditions (remove (fn [c] (some

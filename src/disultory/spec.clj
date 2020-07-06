@@ -73,7 +73,7 @@
 (defn fn-attribute
   "Function attributes are useful when none of the other attribute types
    is expressive enough to generate the required information. The fn
-   must be zero-arity."
+   takes a single argument, the specification as processed so far."
   [id fun]
   {:id id :type :fn :function fun})
 

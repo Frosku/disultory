@@ -1,4 +1,4 @@
-(defproject com.frosku/disultory "0.1.0"
+(defproject com.frosku/disultory "0.1.2"
   :author "Frosku <frosku@frosku.com>"
   :signing {:gpg-key "frosku@frosku.com"}
   :description "Library for the procedural generation of data
@@ -13,4 +13,5 @@
   :test-paths ["t"]
   :target-path "target/%s/"
   :compile-path "%s/classes"
+  :plugins [[lein-bump-version "0.1.6"]]
   :clean-targets ^{:protect false} [:target-path])

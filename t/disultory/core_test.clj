@@ -69,7 +69,7 @@
               (with-attribute :favorite-colors :n-choice 3
                 [:blue 0.1] [:red 0.6] [:green 0.3] [:brown 0.7])))))
   (testing "We can correctly expand :fn attributes"
-    (let [fun (fn [] "Foo")]
+    (let [fun (fn [specification] "Foo")]
       (is (= {:attributes [{:id :name
                             :type :fn
                             :function fun}]}
@@ -178,7 +178,7 @@
     (is (= {:name "Tom"}
            (decide-attribute {:id :name
                               :type :fn
-                              :function (fn [] "Tom")})))))
+                              :function (fn [_] "Tom")})))))
 
 (deftest generation-test
   (testing "We can generate a character with no conditional attributes"

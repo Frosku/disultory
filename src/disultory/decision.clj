@@ -104,5 +104,5 @@
 
 (defn decide-fn-attribute
   "Structures the data for function attributes."
-  [attr]
-  {(:id attr) ((:function attr))})
+  [attr spec]
+  {(:id attr) ((:function attr) spec)})

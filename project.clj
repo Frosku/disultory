@@ -1,9 +1,16 @@
-(defproject com.frosku/disultory "0.1.0-SNAPSHOT"
+(defproject com.frosku/disultory "0.1.0"
   :author "Frosku <frosku@frosku.com>"
-  :description "Library for the procedural generation of data from specification."
+  :signing {:gpg-key "frosku@frosku.com"}
+  :description "Library for the procedural generation of data
+                from specification."
   :url "https://github.com:Frosku/disultory.git"
   :license {:name "The Unlicense"
             :url "https://unlicense.org"}
-  :dependencies [[org.clojure/clojure "1.10.1"]]
+  :dependencies [[org.clojure/clojure "1.10.1"]
+                 [org.fversnel/dnddice "3.0.3"]]
   :repl-options {:init-ns disultory.core}
-  :aot :all)
+  :source-paths ["src"]
+  :test-paths ["t"]
+  :target-path "target/%s/"
+  :compile-path "%s/classes"
+  :clean-targets ^{:protect false} [:target-path])

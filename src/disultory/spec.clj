@@ -1,5 +1,11 @@
 (ns disultory.spec)
 
+(defn dice
+  "Helper function for specifying dice, takes sides, number, and fn."
+  ([fn number] (dice fn number 1))
+  ([fn number sides]
+   {:number number :sides sides :function fn}))
+
 (defn with
   "Returns the parent specification with a new attribute as specified by
    attr. This will usually be used in conjunction with the *-attribute

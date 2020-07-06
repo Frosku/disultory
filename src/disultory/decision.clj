@@ -1,25 +1,41 @@
 (ns disultory.decision)
 
+(defn sides
+  "Takes a dice and returns its number of sides, if the number of sides
+   is absent from the dice, we return 1."
+  [dice]
+  (if (nil? (:sides dice)) 1 (:sides dice)))
+
+(defn roll-once
+  "Simulates a single roll of a dice."
+  [sides]
+  (-> sides
+     inc
+     rand-int))
+
 (defn roll-dice
   "Simple dice roller function, takes a single input in the form
    {:number n :sides z} and rolls ndz (dice notation) dice, returning
    only the cumulative total."
   [dice]
   (apply + (repeatedly (:number dice)
-                       #(+ 1 (rand-int (if (nil? (:sides dice))
-                                         1
-                                         (:sides dice)))))))
+                       #(+ 1 (rand-int (sides dice))))))
+
+(defn roll-dice-for-function
+  "This sums the rolls for all dice with a specified function."
+  [dice fn]
+  (->> dice
+       (filterv #(= fn (:function %)))
+       (mapv #(roll-dice %))
+       (apply +)))
 
 (defn decide-dice-option
   "This function totals up the additive dice rolls and the subtractive
    dice rolls, then subtracts the latter from the former."
   [option]
-  (let [additive-dice (filterv #(= + (:function %)) (:dice option))
-        subtractive-dice (filterv #(= - (:function %)) (:dice option))
-        additive-rolls (mapv #(roll-dice %) additive-dice)
-        subtractive-rolls (mapv #(roll-dice %) subtractive-dice)]
-    {(:id option)
-     (- (apply + additive-rolls) (apply + subtractive-rolls))}))
+  {(:id option)
+     (- (roll-dice-for-function (:dice option) +)
+        (roll-dice-for-function (:dice option) -))})
 
 (defn decide-random-attribute
   "This function dispatches random attributes to be calculated."

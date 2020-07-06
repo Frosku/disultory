@@ -12,17 +12,16 @@
                                                            :sides 6
                                                            :function +}
                                                           {:number 1
+                                                           :sides 1
                                                            :function -}]}
                                     {:id :intelligence :dice [{:number 2
                                                                :sides 4
                                                                :function +}]}]}]}
            (-> (blank-specification)
               (with-attribute :stats :dice
-                [:strength [{:number 2 :sides 6 :function +}
-                            {:number 1 :function -}]]
-                [:intelligence [{:number 2
-                                 :sides 4
-                                 :function +}]]))))
+                [:strength [(dice + 2 6)
+                            (dice - 1)]]
+                [:intelligence [(dice + 2 4)]]))))
     (is (= {:attributes [{:id :age :type :random :dice [{:number 5
                                                         :sides 6
                                                         :function +}]}]}
@@ -187,8 +186,8 @@
                            (with-attribute :gender :distinct
                              [:male 1] [:female 1])
                            (with-attribute :age :random
-                             {:sides 6 :number 2 :function +}
-                             {:number 13 :function +})))
+                             (dice + 2 6)
+                             (dice + 13))))
     (def character (-> character-spec generate))
     (is (= true (contains? character :name)))
     (is (= true (contains? character :age)))

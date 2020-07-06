@@ -1,4 +1,4 @@
-(defproject com.frosku/disultory "0.1.3"
+(defproject com.frosku/disultory "0.1.4"
   :author "Frosku <frosku@frosku.com>"
   :signing {:gpg-key "frosku@frosku.com"}
   :description "Library for the procedural generation of data

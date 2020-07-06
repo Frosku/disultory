@@ -1,6 +1,6 @@
 # Disultory
 
-[![Clojars Project](https://img.shields.io/clojars/v/discord.clj.svg)](https://clojars.org/discord.clj)
+[![Clojars Project](https://img.shields.io/clojars/v/com.frosku/disultory.svg)](https://clojars.org/com.frosku/disultory)
 
 Disultory was created as a component of one of my other projects, but I
 thought it might be useful to someone, so I've decided to release it
